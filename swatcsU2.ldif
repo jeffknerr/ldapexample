@@ -1,0 +1,10 @@
+dn: uid=user2,ou=people,dc=test
+changetype: modify
+add: objectClass
+objectClass: SwatCSUser
+-
+add: swatcsAgreed
+swatcsAgreed: FALSE
+-
+add: swatcsLastSeen
+swatcsLastSeen: 19700101000000-0500

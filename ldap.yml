@@ -1,0 +1,108 @@
+#
+# ansible install playbook for ldap server
+#
+# just do http for testing....
+#
+---
+- hosts: ldap
+  become: yes
+  handlers:
+  - name: Restart slapd
+    service:
+      name: 'slapd'
+      state: 'restarted'
+  tasks:
+  - name: cp debconf slapd conf file
+    copy:
+      src: debconf-slapd.conf
+      dest: debconf-slapd.conf
+  - name: debconf set selections
+    command: "debconf-set-selections debconf-slapd.conf"
+  - name: cp ldap setup script
+    copy:
+      src: ldapconfig.sh
+      dest: ldapconfig.sh
+      mode: 0755
+
+  - name: install ldap packages AFTER preseeding debconf
+    apt:
+      pkg:
+      - slapd
+      - ldap-utils
+      - ldapscripts
+      - shelldap
+      - certbot
+      - tree
+      - nmap
+      - tldr
+      - fish
+      - zsh
+      - debconf-utils
+  - name: remove apparmor
+    apt:
+      pkg: apparmor
+      state: absent
+      purge: yes
+      force: yes
+  - name: cp passwordservice ldif
+    copy:
+      src: passwordservice.ldif
+      dest: passwordservice.ldif
+  - name: cp passwordservice schema
+    copy:
+      src: passwordservice.schema
+      dest: /etc/ldap/schema/passwordservice.schema
+    notify: 'Restart slapd'
+  - name: copy config files
+    copy:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+    with_items:
+      - src: testbase.ldif
+        dest: testbase.ldif
+      - src: testgroupofnames.ldif
+        dest: testgroupofnames.ldif
+      - src: testaccess.ldif
+        dest: testaccess.ldif
+      - src: bash_aliases
+        dest: .bash_aliases
+      - src: user1.ldif
+        dest: user1.ldif
+      - src: user2.ldif
+        dest: user2.ldif
+      - src: admin1.ldif
+        dest: admin1.ldif
+      - src: ldapscripts.conf
+        dest: /etc/ldapscripts/ldapscripts.conf
+        owner: root
+        group: root
+        mode: 0600
+      - src: ldapscripts.passwd
+        dest: /etc/ldapscripts/ldapscripts.passwd
+        owner: root
+        group: root
+        mode: 0600
+      - src: pwappU1.ldif
+        dest: pwappU1.ldif
+      - src: swatcsU1.ldif
+        dest: swatcsU1.ldif
+      - src: pwappU2.ldif
+        dest: pwappU2.ldif
+      - src: swatcsU2.ldif
+        dest: swatcsU2.ldif
+      - src: pwappA1.ldif
+        dest: pwappA1.ldif
+      - src: swatcsA1.ldif
+        dest: swatcsA1.ldif
+
+  - name: Git checkout knerr ldapscripts
+    ansible.builtin.git:
+      repo: 'https://github.com/jeffknerr/ldapscripts.git'
+      dest: /home/vagrant/ldapscripts
+
+# need ldapscripts passwd file set before we run ldapconfig.sh
+  - name: run all the LDAP config commands
+    ansible.builtin.command: 
+      cmd: /home/vagrant/ldapconfig.sh
+      creates: /home/vagrant/DBcreated
+...

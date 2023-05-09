@@ -1,0 +1,22 @@
+dn: uid=admin1,ou=people,dc=test
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: admin1
+sn: Admin1
+givenName: Test
+cn: Test Admin1
+displayName: Test Admin1
+uidNumber: 2000
+gidNumber: 100
+userPassword: {crypt}$6$b5$3JbMh9i3kTu9xt4PN34E2eIykY4me7AKRm56y0Ql2XxMhTvtBC2oGi.fJw1t7mqEbRaYdJdVNg4O5TcLW8xul.
+gecos: Test Admin1
+loginShell: /bin/bash
+homeDirectory: /home/admin1
+mail: admin1@cs.college.edu
+shadowExpire: -1
+shadowFlag: 0
+shadowWarning: 7
+shadowMin: 0
+shadowMax: 99999
+shadowLastChange: 10770

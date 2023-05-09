@@ -1,0 +1,13 @@
+SECRET_KEY = 'notSoSecret'
+MAIL_SERVER = localhost
+MAIL_PORT = 25
+ADMINS = ["knerr@cs.swarthmore.edu"]
+CONTACT = "sysadmins@cs.swarthmore.edu"
+LDAP_DC = "dc=test"
+LDAP_HOST = "192.168.56.6"
+LDAP_ADMIN = "admin"
+LDAP_PW = "ldap.123"
+LDAP_ATTR = ["objectClass", "uid", "sn", "givenName", "cn", "displayName", "uidNumber", "gidNumber", "gecos", "loginShell", "homeDirectory", "mail", "shadowExpire", "shadowFlag", "shadowWarning", "shadowMin", "shadowMax", "shadowLastChange", "swatcsAgreed", "swatcsLastSeen"]
+TEST_ACCOUNT = "testuser"
+TEST_PASSWORD = "testpassword"
+DATABASE_URL=mysql+pymysql://vagrant:dbpassword@127.0.0.1:3306/PasswordService

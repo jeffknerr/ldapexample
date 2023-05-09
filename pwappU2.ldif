@@ -1,0 +1,12 @@
+dn: uid=user2,ou=people,dc=test
+changetype: modify
+add: memberOf
+memberOf: cn=pwapp,ou=groups,dc=test
+-
+
+dn: cn=pwapp,ou=groups,dc=test
+changetype: modify
+add: member
+member: uid=user2,ou=people,dc=test
+-
+
