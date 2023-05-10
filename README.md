@@ -9,7 +9,7 @@ versions:
 
 ```
 ii  ansible 7.5.0-1ppa~jammy
-ii  vagrant 2.3.4
+ii  vagrant 2.3.4  (also worked with 2.2.19)
 ```
 
 End result of the following should be 3 virtual machines, one
@@ -20,7 +20,7 @@ to your workstation).
 ```
 $ alias vg='vagrant'
 $ sudo apt-add-repository -y ppa:ansible/ansible
-$ sudo apt-get udpdate
+$ sudo apt-get update
 $ sudo apt-get install gnupg software-properties-common 
 $ sudo apt-get install ansible vagrant git virtualbox
 $ sudo vim /etc/ansible/hosts
@@ -67,10 +67,6 @@ $ vg ssh pw2
 $ http://192.168.56.5
 $ http://192.168.56.4
 ```
-
-## todo
-
-- vagrant: use same ssh keys each time???
 
 ## details
 
@@ -137,3 +133,8 @@ vg ssh pw2
 http://192.168.56.5
 http://192.168.56.4
 ```
+
+## todo
+
+- vagrant: how to use same ssh host keys each time???
+
